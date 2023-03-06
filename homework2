@@ -1,0 +1,70 @@
+--Задание 1
+
+create table genre(
+	genre_id serial primary key,
+	genre_name varchar(255) not null unique
+)
+
+create table singer(
+	singer_id serial primary key,
+	nickname varchar(255) not null unique
+)
+
+create table album(
+	album_id serial primary key,
+	name_album varchar(40) not null unique,
+	year_album date
+)
+
+create table complitation(
+	complitation_id serial primary key,
+	name_complitation varchar(40) not null unique,
+	year_complitation date
+)
+
+create table singer_genre(
+	singer_id integer references singer(singer_id),
+	genre_id integer references genre(genre_id),
+	constraint sing_genre_id primary key (singer_id, genre_id)
+)
+
+create table album_singer(
+	album_id integer references album(album_id),
+	singer_id integer references singer(singer_id),
+	constraint al_sing_id primary key (album_id, singer_id)
+)
+
+create table track(
+	track_id serial primary key,
+	track_name varchar(40) not null,
+	duration interval,
+	album_id integer references album(album_id)
+)
+
+create table complitation_track(
+	complitation_id integer references complitation(complitation_id),
+	track_id integer references track(track_id),
+	constraint com_track_id primary key (complitation_id, track_id)
+)
+	
+--Задание 2
+
+create schema dreamteam
+
+
+create table department(
+	department_id serial primary key,
+	department_name varchar(255) not null
+)
+
+create table chief(
+	chief_id serial primary key,
+	chief_name varchar(80) not null
+)
+
+create table employee(
+	employee_id serial primary key,
+	name_employee varchar(80) not null,
+	department_id integer not null references department(department_id),
+	chief_id integer references chief(chief_id)
+)
